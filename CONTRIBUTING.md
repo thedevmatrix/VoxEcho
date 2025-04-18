@@ -57,11 +57,7 @@ We’re here to build a real-time system that empowers local communities to repo
 
 ---
 
-## 🤝 Contributing
 
-Please read our [CONTRIBUTING.md](./CONTRIBUTING.md) for full guidelines on how to collaborate and contribute.
-
----
 
 ## 🤝 Code of Conduct
 
