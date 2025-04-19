@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compileOnSave": false,
+  "files": [],
+  "references": [
+    {
+      "path": "./apps/VoxEcho-e2e"
+    },
+    {
+      "path": "./apps/VoxEcho"
+    },
+    {
+      "path": "./shared-utils"
+    },
+    {
+      "path": "./backend-e2e"
+    },
+    {
+      "path": "./backend"
+    }
+  ]
+}
