@@ -10,8 +10,8 @@ const swcJestConfig = JSON.parse(
 swcJestConfig.swcrc = false;
 
 export default {
-  displayName: '@vox-echo-workspace/shared-utils',
-  preset: '../jest.preset.js',
+  displayName: '@vox-echo-workspace/apps/backend-voxecho',
+  preset: '../../jest.preset.js',
   testEnvironment: 'node',
   transform: {
     '^.+\\.[tj]s$': ['@swc/jest', swcJestConfig],

@@ -73,6 +73,7 @@
     "apps/*",
     "shared-utils",
     "backend",
-    "backend-e2e"
+    "backend-e2e",
+    "libs/*"
   ]
 }
