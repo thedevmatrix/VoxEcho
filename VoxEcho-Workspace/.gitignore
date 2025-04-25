@@ -46,3 +46,7 @@ Thumbs.db
 out
 
 test-output
+
+# Ignore .env files
+.env
+

@@ -4,19 +4,19 @@
   "files": [],
   "references": [
     {
-      "path": "./apps/VoxEcho-e2e"
+      "path": "./apps/frontend-voxecho-e2e"
     },
     {
-      "path": "./apps/VoxEcho"
+      "path": "./apps/backend-voxecho-e2e"
     },
     {
-      "path": "./shared-utils"
+      "path": "./apps/frontend-voxecho"
     },
     {
-      "path": "./backend-e2e"
+      "path": "./apps/backend-voxecho"
     },
     {
-      "path": "./backend"
+      "path": "./libs/shared-utils"
     }
   ]
 }
