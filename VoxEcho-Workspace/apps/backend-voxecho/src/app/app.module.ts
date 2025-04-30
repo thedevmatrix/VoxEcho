@@ -1,8 +1,11 @@
-import { Module } from '@nestjs/common';
+import {  Module, MiddlewareConsumer, NestModule,  } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { envSchema } from '../config/validation';
+import { CorsMiddleware } from '../middleware/cor-middleware';
+import rateLimit from 'express-rate-limit';
+import helmet from 'helmet';
 
 @Module({
   imports: [
@@ -21,4 +24,18 @@ import { envSchema } from '../config/validation';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+
+//make my cor middle global 
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(CorsMiddleware).forRoutes('*');
+    consumer.apply(helmet()).forRoutes('*');
+    consumer.apply(rateLimit({
+      windowMs: 15 * 60 *1000,
+      max:100
+
+    })).forRoutes('*')
+    
+  }
+
+}
