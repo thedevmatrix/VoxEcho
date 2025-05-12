@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { envSchema } from '../config/validation';
 import { CorsMiddleware } from '../middleware/cor-middleware';
+import { CustomConfigService } from '../config/config.service';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 
@@ -22,7 +23,8 @@ import helmet from 'helmet';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, CustomConfigService],
+  exports: [CustomConfigService],
 })
 
 //make my cor middle global 
