@@ -2,6 +2,7 @@ import { Body, Controller, Get, Post, Request as ReqDecorator, UnauthorizedExcep
 
 import type { Request } from 'express'; // Good for type-only import (TS 4.5+)
 import { LoginDto } from '../dto/login.dto';
+import { regDto } from '../dto/reg.dto';
 
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
@@ -9,9 +10,24 @@ import { AuthService } from './auth.service';
 @Controller('auth')
 export class AuthController {
     constructor(private authService : AuthService){}
+    @Post('registration')
+    async registration (@Body() regdto: regDto){
+
+        if(!regdto ){
+            throw new UnauthorizedException('fill registeration  details ')
+        }
+
+        const newUser = await this.authService.userRegistration(
+            regdto
+          );
+
+        return newUser
+
+    }
+
     @Post('login')
     async login(@Body() logindto: LoginDto){
-        const user = await this.authService.validateUser(logindto.username, logindto.password);
+        const user = await this.authService.validateUser(logindto);
         if(!user){
             throw new UnauthorizedException('invalid credential')
         }
