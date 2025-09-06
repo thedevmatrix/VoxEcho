@@ -8,6 +8,7 @@ const config: Config = {
   transform: {
     '^.+\\.[tj]s$': ['ts-jest', {
       tsconfig: '<rootDir>/tsconfig.spec.json',
+      useESM: true,
     }]
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
