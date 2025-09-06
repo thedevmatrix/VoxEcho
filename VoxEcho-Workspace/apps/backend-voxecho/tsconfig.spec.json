@@ -2,11 +2,15 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./out-tsc/jest",
+    "module": "commonjs",
+    "moduleResolution": "node",
     "types": ["jest", "node"],
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "esModuleInterop": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "target": "es2021",
+    "strict": true,
+    "resolveJsonModule": true
   },
   "include": [
     "jest.config.ts",

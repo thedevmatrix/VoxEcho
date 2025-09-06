@@ -1,0 +1,33 @@
+{
+  "version": 2,
+  "projects": {
+    "backend-voxecho": {
+      "root": "apps/backend-voxecho",
+      "sourceRoot": "apps/backend-voxecho/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nx/webpack:webpack",
+          "options": {
+            "outputPath": "dist/apps/backend-voxecho",
+            "main": "apps/backend-voxecho/src/main.ts",
+            "tsConfig": "apps/backend-voxecho/tsconfig.app.json",
+            "generatePackageJson": true
+          }
+        },
+        "serve": {
+          "executor": "@nx/node:node",
+          "options": {
+            "buildTarget": "backend-voxecho:build"
+          }
+        },
+        "test": {
+          "executor": "@nx/jest:jest",
+          "options": {
+            "jestConfig": "apps/backend-voxecho/jest.config.ts"
+          }
+        }
+      }
+    }
+  }
+}
