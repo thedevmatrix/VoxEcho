@@ -1,10 +1,11 @@
 import { Controller, Get, Post, Body, Param, Delete, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from '../auth/jwt.strategy';
+import { AuthGuard } from '@nestjs/passport';
+
 import { IncidentsService } from './incidents.service';
 import { CreateIncidentDto } from './dto/create-incident.dto';
 
 @Controller('incidents')
-@UseGuards(JwtAuthGuard)
+@UseGuards(AuthGuard('jwt'))
 export class IncidentsController {
   constructor(private readonly incidentsService: IncidentsService) {}
 
