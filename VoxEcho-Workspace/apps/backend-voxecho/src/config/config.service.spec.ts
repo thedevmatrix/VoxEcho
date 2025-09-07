@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 const mockConfig: Record<string, string> = {
   PORT: '3000',
   DATABASE_URL: 'https://your-database-url.com',
-  JWT_SECRET: 'your-jwt-secret'
+  JWT_SECRET: 'your-jwt-secret',
 };
 
 describe('Config Validation', () => {
@@ -32,7 +32,9 @@ describe('Config Validation', () => {
   });
 
   it('should have DATABASE_URL defined and valid', () => {
-    expect(configService.get('DATABASE_URL')).toBe('https://your-database-url.com');
+    expect(configService.get('DATABASE_URL')).toBe(
+      'https://your-database-url.com'
+    );
   });
 
   it('should have JWT_SECRET defined', () => {
