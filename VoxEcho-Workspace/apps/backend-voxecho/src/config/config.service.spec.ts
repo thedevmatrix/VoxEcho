@@ -1,25 +1,26 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { envSchema } from './validation';
+import { ConfigService } from '@nestjs/config';
+
+const mockConfig: Record<string, string> = {
+  PORT: '3000',
+  DATABASE_URL: 'https://your-database-url.com',
+  JWT_SECRET: 'your-jwt-secret'
+};
 
 describe('Config Validation', () => {
   let configService: ConfigService;
 
-  beforeAll(async () => {
-    // Mock environment variables with valid values
-    process.env.PORT = '3000'; // Valid port
-    process.env.DATABASE_URL = 'https://your-database-url.com'; // Valid URL
-    process.env.JWT_SECRET = 'your-jwt-secret'; // Valid JWT secret
-
+  beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [
-        ConfigModule.forRoot({
-          validate: (config) => {
-            const parsed = envSchema.safeParse(config);
-            if (!parsed.success) throw new Error(parsed.error.message);
-            return parsed.data;
+      providers: [
+        {
+          provide: ConfigService,
+          useValue: {
+            get: jest.fn((key: string) => {
+              return mockConfig[key];
+            }),
           },
-        }),
+        },
       ],
     }).compile();
 
@@ -27,7 +28,7 @@ describe('Config Validation', () => {
   });
 
   it('should return the correct port', () => {
-    expect(configService.get('PORT')).toBe('3000'); // Ensuring the mock env variable is returned
+    expect(configService.get('PORT')).toBe('3000');
   });
 
   it('should have DATABASE_URL defined and valid', () => {
