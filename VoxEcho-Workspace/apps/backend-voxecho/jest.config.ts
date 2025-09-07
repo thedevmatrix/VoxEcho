@@ -6,10 +6,7 @@ const config: Config = {
   preset: '../../jest.preset.js',
   testEnvironment: 'node',
   transform: {
-    '^.+\\.[tj]s$': ['ts-jest', {
-      tsconfig: '<rootDir>/tsconfig.spec.json',
-      useESM: true,
-    }]
+    '^.+\\.[tj]s$': '@swc/jest'
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/apps/backend-voxecho',

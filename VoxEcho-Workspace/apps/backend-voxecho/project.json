@@ -57,5 +57,5 @@
     }
   },
   "tags": [],
-  "implicitDependencies": []
+  "implicitDependencies": ["backend-voxecho"]
 }
