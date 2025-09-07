@@ -64,8 +64,7 @@
       "plugin": "@nx/jest/plugin",
       "options": {
         "targetName": "test"
-      },
-      "exclude": ["backend-e2e/**/*"]
+      }
     },
     {
       "plugin": "@nx/js/typescript",

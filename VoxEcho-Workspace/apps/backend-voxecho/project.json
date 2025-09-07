@@ -1,5 +1,5 @@
 {
-  "name": "backend-voxecho",
+  "name": "@vox-echo-workspace/backend",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/backend-voxecho/src",
   "projectType": "application",
@@ -57,5 +57,5 @@
     }
   },
   "tags": [],
-  "implicitDependencies": ["backend-voxecho"]
+  "implicitDependencies": []
 }
