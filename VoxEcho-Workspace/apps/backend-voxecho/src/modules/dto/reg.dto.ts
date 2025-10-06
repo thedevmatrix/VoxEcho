@@ -1,10 +1,10 @@
-import {  IsInt, Length,   IsEmail , IsNotEmpty, Matches } from "class-validator"
+import {  Length,   IsEmail , IsNotEmpty } from "class-validator"
 
 export class regDto{
 
     @IsNotEmpty()
     @Length(1, 20)
-    name !:string
+    firstname !:string
 
     @IsNotEmpty()
     @Length(1, 20)
@@ -19,31 +19,20 @@ export class regDto{
     @Length(9, 20)
     password !: string
 
-
-
     @IsNotEmpty()
     @Length(9, 20)
     comfirmPass !: string
 
     @IsNotEmpty()
     @IsEmail()
-    Email!: string
+    email!: string
 
     @IsNotEmpty()
-    @Matches(/^\d{1,2}$/, {message: 'Day must be a number between 1-31'})
-    day!: number 
-
-    @IsInt()
-    @IsNotEmpty()
-    month!: number 
-    @Matches(/^\d{1,2}$/, {message: 'month must be a number between 1-12'})
-
-    @IsInt()
-    @IsNotEmpty()
-    @Matches(/^\d{4}$/, {message: 'Day must be a number between 1-31'})
-    year!: number
-
-
-
+    dob!: Date
+  name: string
+  Email: string
+  day: number
+  month: number
+  year: number
 
 }

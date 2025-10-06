@@ -47,22 +47,11 @@
     }
   },
   "dependencies": {
-    "@nestjs/config": "^4.0.2",
-    "@nestjs/jwt": "^11.0.0",
-    "@nestjs/passport": "^11.0.5",
-    "bcrypt": "^5.1.1",
-    "class-transformer": "^0.5.1",
-    "class-validator": "^0.14.2",
-    "cors": "^2.8.5",
-    "express-rate-limit": "^7.5.0",
-    "helmet": "^8.1.0",
-    "passport": "^0.7.0",
-    "passport-jwt": "^4.0.1",
-    "zod": "^3.24.3"
+        "pg": "^8.16.3"
+
+    
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.2",
-    "@types/passport-jwt": "^4.0.1",
-    "@types/supertest": "^6.0.3"
+   
   }
 }
