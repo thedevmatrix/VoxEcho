@@ -1,39 +1,37 @@
 import {  Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from './user.entity';
+
+
 
 @Injectable()
 export class UsersService {
-   
- 
-    private readonly  loginUser  = [   
-        {
-        id: 1 , 
-        username: 'admin', 
-        password: 'admin123'
-        }, 
-        {
-        id: 2 , 
-        username: 'admin2', 
-        password: 'admin1234'
-        }
-        
-      ]
 
+    constructor(
+        @InjectRepository(User)
+        private usersRepository: Repository<User>,
+    ){}
+
+    // find all user 
+    async findAll():Promise<User[]>{
+        return this.usersRepository.find();
+    }
     
- 
-  
 
-// function to find user , if it existed . 
-   async findByUsername ( username: string ){ // this is a method to find user . 
-        if(!username)
-            return `usernmae must be inputed `;
-        ///compare this current username to the logindto user data that user post . 
-        const user = await this.loginUser.find(User => User.username === username)
+// find user by username 
+   async findByUsername(username: string):Promise<User | null>{
+         return this.usersRepository.findOneBy({username})
+    }
 
-        return user ?? null 
-       
- }
+     //find user by id 
+    async findById( id:number):Promise<User | null>{
+        return this.usersRepository.findOneBy({id})
+    }
 
- 
-
-
+     //remove user by id 
+    async remove(id: number) : Promise<User | null>{
+        return this.usersRepository.findOneBy({id})
+    }
+   
 }

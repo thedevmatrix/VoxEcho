@@ -1,30 +1,47 @@
-import {  Module, MiddlewareConsumer, NestModule,  } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import {  Module, MiddlewareConsumer, NestModule, Global,  } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { envSchema } from '../config/validation';
 import { CorsMiddleware } from '../middleware/cor-middleware';
-import { CustomConfigService } from '../config/config.service';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
+import { ConfigModule } from '@nestjs/config';
+import { envSchema } from '../config/validation';
+import { CustomConfigService } from '../config/config.service';
+import { AuthModule } from '../modules/auth/auth.module';
+import { UsersModule } from '../modules/users/users.module';
+import { DatabaseModule } from '../modules/database/database.module';
+import { multerConfig } from '../middleware/Muterconfig.module';
 
+import { IncidentsModule } from '../modules/incidents/incidents.module';
+import * as path from "path";
+@Global()
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      envFilePath: '.env',
-      validate: (config) => {
-        const parsed = envSchema.safeParse(config);
-        if (!parsed.success) {
-          throw new Error(`❌ Invalid environment variables: ${parsed.error.message}`);
-        }
-        return parsed.data;
-      },
-    }),
-  ],
+ imports: [
+  ConfigModule.forRoot({
+    
+envFilePath: [path.resolve(process.cwd(), '.env')],
+    validate: (config) => {
+      const parsed = envSchema.safeParse(config);
+      if (!parsed.success) {
+        throw new Error(
+          `❌ Invalid environment variables: ${parsed.error.message}`
+        );
+      }
+      return parsed.data;
+    },
+  }),
+
+  DatabaseModule,
+  AuthModule,
+  UsersModule,
+  IncidentsModule,
+  multerConfig,
+
+],
+
   controllers: [AppController],
   providers: [AppService, CustomConfigService],
-  exports: [CustomConfigService],
+  exports: [CustomConfigService]
 })
 
 //make my cor middle global 

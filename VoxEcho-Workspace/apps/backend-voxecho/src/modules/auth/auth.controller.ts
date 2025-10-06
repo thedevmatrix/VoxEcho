@@ -1,15 +1,27 @@
-import { Body, Controller, Get, Post, Request as ReqDecorator, UnauthorizedException, UseGuards } from '@nestjs/common';
-
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request as ReqDecorator, UnauthorizedException, UseGuards } from '@nestjs/common';
 import type { Request } from 'express'; // Good for type-only import (TS 4.5+)
+
+// Extend Express Request type to include 'user'
+declare module 'express' {
+  export interface Request {
+    user?: any;
+  }
+}
+
 import { LoginDto } from '../dto/login.dto';
 import { regDto } from '../dto/reg.dto';
+import { AuthGuard } from './AuthJwt.strategy';
+import { Public } from './public.decorator';
 
-import { AuthGuard } from '@nestjs/passport';
+
 import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
     constructor(private authService : AuthService){}
+    
+    @Public()
+    @HttpCode(201)
     @Post('registration')
     async registration (@Body() regdto: regDto){
 
@@ -24,24 +36,24 @@ export class AuthController {
         return newUser
 
     }
-
+    
+    @Public()
+    @HttpCode(HttpStatus.OK)
     @Post('login')
     async login(@Body() logindto: LoginDto){
-        const user = await this.authService.validateUser(logindto);
+        const user = await this.authService.validateUser(logindto)
         if(!user){
-            throw new UnauthorizedException('invalid credential')
+            throw new UnauthorizedException('user must be inputed')
         }
-        return {access_token: await this.authService.signToken(user)
 
-        };
-
+        return user
     }
 
     // protect routing  with useGuard 
-    @UseGuards(AuthGuard('jwt'))  
+    @UseGuards(AuthGuard)  
     @Get('profile')
     getProfile(@ReqDecorator() req: Request){
-        return req.user; //  return jwt payload 
+        return req.user; //  return jwt user token, payload
     }
-
+     
 }
