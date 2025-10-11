@@ -6,7 +6,8 @@ import {
   BeforeInsert
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import  { Post } from '../incidents/incidentPost.entity'; 
+import  { Post } from '../entities /incidentPost.entity'; 
+import { Comment} from './comment.entity';
 
 @Entity()
 export class User {
@@ -41,4 +42,7 @@ export class User {
 
   @OneToMany(() => Post, (post) => post.user)
   incidents!: ()=> Post[];
+
+  @OneToMany(()=> Comment, (comment) => comment.user)
+  comments!: ()=>  Comment[];
 }

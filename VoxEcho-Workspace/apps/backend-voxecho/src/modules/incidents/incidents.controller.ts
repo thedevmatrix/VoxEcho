@@ -1,4 +1,4 @@
-import { UseInterceptors, Controller, Post,  UploadedFile, ParseFilePipeBuilder, HttpStatus, Body, Req, BadRequestException} from "@nestjs/common";
+import { UseInterceptors, Controller, Post,  UploadedFile, ParseFilePipeBuilder, HttpStatus, Body, Req} from "@nestjs/common";
 import type { Express } from "express";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { createIncidentDto } from "../dto/incidentDto/incidentPost.dto";

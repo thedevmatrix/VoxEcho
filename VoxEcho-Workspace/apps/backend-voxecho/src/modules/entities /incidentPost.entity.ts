@@ -3,10 +3,13 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
-  CreateDateColumn
+  CreateDateColumn,
+  OneToMany
 } from 'typeorm';
 import { LocationDto } from '../dto/incidentDto/location.dto';
-import { User } from '../users/user.entity'; // 👈 type-only import
+import { User } from './user.entity';
+import { Comment } from './comment.entity';
+
 
 @Entity()
 export class Post {
@@ -36,4 +39,7 @@ export class Post {
 
   @ManyToOne(() => User, (user) => user.incidents)
   user!: ()=> User;
+
+  @OneToMany(() => Comment, (comment) => comment.post)
+  comments!: ()=> Comment[];
 }

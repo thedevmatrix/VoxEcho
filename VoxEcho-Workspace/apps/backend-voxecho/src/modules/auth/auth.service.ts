@@ -6,8 +6,7 @@ import { regDto } from '../dto/reg.dto';
 import { LoginDto } from '../dto/login.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '../users/user.entity';
-
+import { User } from '../entities /user.entity';
 // we would need to store registered user to data base using the orm features 
 @Injectable()
 export class AuthService {

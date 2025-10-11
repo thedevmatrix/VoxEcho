@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { IncidentsController } from './incidents.controller';
 import { IncidentsService } from './incidents.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Post } from './incidentPost.entity';
+import { Post } from '../entities /incidentPost.entity';
 
 
 @Module({
