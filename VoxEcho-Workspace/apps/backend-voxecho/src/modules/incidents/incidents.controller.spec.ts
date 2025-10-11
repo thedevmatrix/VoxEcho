@@ -62,7 +62,6 @@ describe('IncidentsController', () => {
 
 
 
-
   it('should include file image to the updated body', async () => {
   const mockFile = { filename: 'test.jpg' } as Express.Multer.File;
 

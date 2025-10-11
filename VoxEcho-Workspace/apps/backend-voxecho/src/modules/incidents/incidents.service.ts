@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException  } from '@nestjs/common';
 import { createIncidentDto } from '../dto/incidentDto/incidentPost.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
-import { Post } from './incidentPost.entity';
+import { Post } from '../entities /incidentPost.entity';
 
 @Injectable()
 export class IncidentsService {

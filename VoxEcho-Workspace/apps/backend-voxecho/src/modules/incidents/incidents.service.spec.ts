@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { IncidentsService } from './incidents.service';
 import { Repository } from 'typeorm';
-import { Post } from './incidentPost.entity';
+import { Post } from '../entities /incidentPost.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { createIncidentDto } from '../dto/incidentDto/incidentPost.dto';
 describe('IncidentsService', () => {

@@ -6,8 +6,8 @@ import * as bcrypt from 'bcrypt';
 import { UnauthorizedException } from '@nestjs/common';
 import { LoginDto } from '../dto/login.dto';
 import { regDto } from '../dto/reg.dto';
-import { User } from '../users/user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { User } from '../entities /user.entity';
 
 describe('AuthService', () => {
   let authService: AuthService;
