@@ -9,6 +9,7 @@ import {
 import { LocationDto } from '../dto/incidentDto/location.dto';
 import { User } from './user.entity';
 import { Comment } from './comment.entity';
+import { Votes } from './incident-votes.entity';
 
 
 @Entity()
@@ -42,4 +43,7 @@ export class Post {
 
   @OneToMany(() => Comment, (comment) => comment.post)
   comments!: ()=> Comment[];
+
+  @OneToMany(()=> Votes, (vote) => vote.posts)
+  votes!: ()=> Votes[];
 }
