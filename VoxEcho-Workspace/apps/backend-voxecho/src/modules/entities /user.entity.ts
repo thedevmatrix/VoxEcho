@@ -8,6 +8,7 @@ import {
 import * as bcrypt from 'bcrypt';
 import  { Post } from '../entities /incidentPost.entity'; 
 import { Comment} from './comment.entity';
+import { Votes } from './incident-votes.entity';
 
 @Entity()
 export class User {
@@ -45,4 +46,7 @@ export class User {
 
   @OneToMany(()=> Comment, (comment) => comment.user)
   comments!: ()=>  Comment[];
+
+  @OneToMany(()=> Votes, (vote)=> vote.user)
+  votes!: ()=> Votes[]
 }
