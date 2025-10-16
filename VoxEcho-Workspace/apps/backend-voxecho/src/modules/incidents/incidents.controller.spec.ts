@@ -8,6 +8,7 @@ import { AuthGuard } from '../auth/AuthJwt.strategy';
 import { Reflector } from '@nestjs/core';
 import { CustomConfigService } from '../../config/config.service';
 
+
     //-->  this checks if request is permitted before hitting the auth guard.
     class MockAuthGuard implements CanActivate {
       canActivate(){
@@ -71,35 +72,42 @@ describe('IncidentsController', () => {
 
   const body: createIncidentDto = {} as any;
 
+
   // Mock the service method and simulate its internal logic
   jest
     .spyOn(service, 'handleIncidentUpload')
-    .mockImplementation(async (dto, file, userId) => {
-      // This replicates what your service actually does
-      dto.file = file.filename;
+    .mockImplementation(async (dto, file , userId) => {
+      dto.file =  file.filename;
+
       return {
-        id: 1,
-        title: dto.title,
-        content: dto.content,
-        file: dto.file,
-        location: dto.location,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        isActive: true,
-        user: {
-          id: userId,
-          username: 'testUser',
-          firstname: 'admin',
-          lastName: 'add',
-          password: 'hashed',
-          hashPassword: function (): Promise<void> {
-          throw new Error('Function not implemented.');
-    },    email: 'test@example.com',
-          dob: new Date(8051997),
-          isActive: false,
-          posts: [],
-        }
-      };
+      id: 1,
+      tietle: dto.title,
+      content: dto.content,
+      file: dto.file,
+      lsocation: dto.location,
+      ucreatedAt: new Date(),
+      updatedAt: new Date(),
+      isActive: true,
+
+      user: () => ({
+        id: userId,
+        username: 'testUser',
+        firstname: 'admin',
+        lastName: 'add',
+        password: 'hashed',
+        email: 'test@example.com',
+        dob: new Date(7-6-1997),
+        isActive: false,
+
+      }),
+
+      comments: () => [],
+      votes: ()=> []
+      
+      } as any 
+
+    
+     
     });
 
   // Await the controller method
