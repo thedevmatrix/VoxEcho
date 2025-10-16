@@ -11,7 +11,7 @@ export enum VoteType {
 @Index(['userId', 'votableId', 'votableType'], { unique: true }) // Prevent duplicate votes per user per item
 export class Votes {
   @PrimaryGeneratedColumn()
-  id!: string;
+  id!: number;
 
   @Column({ type: 'enum', enum: VoteType })
   type!: VoteType;
@@ -19,7 +19,7 @@ export class Votes {
   @Column('text') // 'post' or 'comment'
   votableType!: string;
 
-  @Column('uuid')
+  @Column()
   votableId!: string;
 
   @ManyToOne(() => User, (user) => user.votes)
@@ -29,7 +29,7 @@ export class Votes {
   posts!: ()=> Post[]
 
   @Column()
-  userId!: string;
+  userId!: number;
 
   @CreateDateColumn()
   createdAt!: Date;

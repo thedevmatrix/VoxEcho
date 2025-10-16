@@ -4,11 +4,17 @@ import { IncidentsService } from './incidents.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Post } from '../entities /incidentPost.entity';
 import { IncidentVotesModule } from './incidentVotes/incident-votes.module';
+import { LocationService } from './location/location.service';import { LocationModule } from './location/location.module';
+import { Comment } from '../entities /comment.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Post]), IncidentVotesModule],
+  imports: [
+    TypeOrmModule.forFeature([Post, Comment]),
+    IncidentVotesModule,
+    LocationModule,
+  ],
   controllers: [IncidentsController],
-  providers: [IncidentsService],
+  providers: [IncidentsService, LocationService],
 
   exports: [IncidentsService, TypeOrmModule],
 })

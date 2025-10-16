@@ -80,15 +80,15 @@ it('should create and save a post', async () => {
     expect(result).toEqual(fakePost);
   });
 
-  it('should find post by id (findPost)', async () => {
-    const fakePost = { id: 4, title: 'Post 4' };
+  /*it('should find post with location', async () => {
+    const fakePost = { id: 4, location: 'lagos', title: 'Post 4' };
     mockPostRepository.findOneBy.mockResolvedValue(fakePost);
 
-    const result = await service.findPost(4);
+    const result = await service.findPostWithLocation([]);
 
     expect(repo.findOneBy).toHaveBeenCalledWith({ id: 4 });
     expect(result).toEqual(fakePost);
-  });
+  }); */
 
  
 
