@@ -16,19 +16,18 @@ export class createIncidentDto{
 
     @IsOptional()
     @IsString()
-     file!: string
+    file!: string
 
     @IsOptional()
-     @ValidateNested({ }) // check as true to validate everything in our loop 
-     @Type(() => LocationDto) //loop generator 
-      @ArrayMinSize(1)
-
-     location !: LocationDto[]
+    @ValidateNested({ }) // check as true to validate everything in our loop 
+    @Type(() => LocationDto) //loop generator 
+    @ArrayMinSize(1)
+    location !: LocationDto[]
 
 
     @Type(() => Date)
     @IsDate()
-     createdAt !: Date;
+    createdAt !: Date;
 
     @Type(() => Date)
     @IsDate()

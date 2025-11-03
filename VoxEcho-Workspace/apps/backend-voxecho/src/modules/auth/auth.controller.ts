@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request as ReqDecorator, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, HttpCode, HttpStatus, Post, Request as ReqDecorator, UnauthorizedException, UseGuards } from '@nestjs/common';
 import type { Request } from 'express'; // Good for type-only import (TS 4.5+)
 
 // Extend Express Request type to include 'user'
@@ -48,6 +48,24 @@ export class AuthController {
 
         return user
     }
+
+    @Public()
+    @HttpCode(HttpStatus.OK)
+    @Post('forgot-password')
+    async forgotPassword(@Body('email') email: string ){
+        if(!email) throw new BadRequestException('Email required');
+    
+        return await this.authService.forgotPassword(email)
+    }
+   
+    @Public()
+    @HttpCode(HttpStatus.OK)
+    @Post('reset-password')    
+    async resetPassword(@Body() body: {token: string; newpass: string }){
+        return await this.authService.resetPassword(body.token, body.newpass)
+
+    }
+
 
     // protect routing  with useGuard 
     @UseGuards(AuthGuard)  

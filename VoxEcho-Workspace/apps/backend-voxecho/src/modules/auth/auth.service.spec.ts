@@ -18,11 +18,13 @@ describe('AuthService', () => {
 
   const mockJwtService = {
     signAsync: jest.fn().mockResolvedValue('mocked-jwt-token'),
+    verifyAsync: jest.fn().mockResolvedValue('mocked-jwt-token')
   };
 
   const mockUserRepository = {
     create: jest.fn((dto) => dto), // simulate create just returning the dto
     save: jest.fn((dto) => Promise.resolve({ ...dto, id: 1 })), // simulate save returning user with id
+    findOne: jest.fn().mockResolvedValue({ id: 1, email: 'admin@example.com' })
   };
 
   beforeEach(async () => {
@@ -194,4 +196,39 @@ describe('AuthService', () => {
       expect(result.User.username).toBe('test');
     });
   });
+
+  it('should hash and save new password successfully', async () => {
+      const mockUser = {
+         id: 1, 
+         password: 'old'
+         };
+      (mockJwtService.verifyAsync as jest.Mock) = jest.fn().mockReturnValue({ sub: 1 });
+      (mockUserRepository.findOne as jest.Mock) = jest.fn().mockResolvedValue(mockUser);
+      (mockUserRepository.save as jest.Mock) = jest.fn().mockResolvedValue(mockUser);
+      (bcrypt.hash as jest.Mock).mockResolvedValue('hashed-password');
+
+      const result = await authService.resetPassword('reset-token', 'new123');
+      expect(bcrypt.hash).toHaveBeenCalledWith('new123', 10);
+      expect(mockUser.password).toBe('hashed-password');
+      expect(result.message).toMatch(/success/i);
+    });
+
+it('should throw error if user not found', async () => {
+      (mockUserRepository.findOne as jest.Mock) = jest.fn().mockResolvedValue(null);
+      await expect(authService.forgotPassword('unknown@mail.com'))
+        .rejects.toThrow('User is not found');
+    });
+
+    it('should return reset token if user exists', async () => {
+      const mockUser = { id: 1, email: 'admin@example.com' };
+      (mockUserRepository.findOne as jest.Mock) = jest.fn().mockResolvedValue(mockUser);
+      (mockJwtService.signAsync as jest.Mock).mockResolvedValue('reset-token');
+
+      const result = await authService.forgotPassword('admin@example.com');
+      expect(result).toEqual({ message : 'Reset link sent',token: 'reset-token' });
+      expect(mockJwtService.signAsync).toHaveBeenCalledWith({ sub: 1 });
+    });
+ 
+
+    
 });

@@ -9,6 +9,7 @@ import { AuthGuard } from './AuthJwt.strategy';
 
 describe('AuthController', () => {
   let authController: AuthController;
+  let authService: AuthService
   let app: INestApplication;
 
   beforeEach(async () => {
@@ -29,6 +30,8 @@ describe('AuthController', () => {
             User: { id: 1, username: 'admin' 
               
             }
+
+            
            }),
 
           },
@@ -44,6 +47,7 @@ describe('AuthController', () => {
     await app.init();
 
     authController = module.get<AuthController>(AuthController);
+    authService = module.get<AuthService>(AuthService)
   });
 
   afterEach(async () => {
@@ -99,4 +103,24 @@ describe('AuthController', () => {
       expect(result).toEqual(mockUser);
     });
   });
+
+  describe('forget-pass', () => {
+    it('should delegate forgotPassword to service', async () => {
+    authService.forgotPassword = jest.fn().mockResolvedValue({ token: 't' });
+    const result = await authController.forgotPassword('a@a.com');
+    expect(authService.forgotPassword).toHaveBeenCalledWith('a@a.com');
+    expect(result).toEqual({ token: 't' });
+  });
+
+});
+
+  describe('reset-pass', () => {
+    it('should delegate forgotPassword to service', async () => {
+    authService.forgotPassword = jest.fn().mockResolvedValue({ token: 't' });
+    const result = await authController.forgotPassword('a@a.com');
+    expect(authService.forgotPassword).toHaveBeenCalledWith('a@a.com');
+    expect(result).toEqual({ token: 't' });
+  });
+
+  })
 });

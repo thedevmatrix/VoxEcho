@@ -37,9 +37,14 @@ describe('IncidentsController', () => {
         },
         {
           provide: JwtService, 
-          useValue: {Verify: jest.fn()}
+          useValue: {
+            Verify: jest.fn()
+          }
         },
-              { provide: AuthGuard, useValue: { canActivate: jest.fn(() => true) } 
+              { 
+                provide: AuthGuard, useValue: { 
+                  canActivate: jest.fn(() => true) 
+                } 
             },
                   { 
                     provide: Reflector, useValue: {} 
@@ -119,13 +124,6 @@ describe('IncidentsController', () => {
   expect(service.handleIncidentUpload).toHaveBeenCalledWith(body, mockFile, 1);
   expect(result).toBeDefined();
 });
-
-
-
-
-
-
-
 
   
 });
