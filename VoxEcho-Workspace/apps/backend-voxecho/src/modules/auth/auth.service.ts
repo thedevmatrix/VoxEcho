@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from '../users/users.service';
@@ -74,4 +74,57 @@ export class AuthService {
 
     return { User, access_token };
   }
+
+  // reset passwor method; 
+  async forgotPassword( email: string){
+    //check if user exit 
+    const user = await this.userRepository.findOne({
+      where: {email}
+    })
+
+    if(!user) throw new NotFoundException('User is not found ')
+
+    const payload = {
+      sub: user.id
+    }
+
+    const token = await this.jwtService.signAsync(payload)
+
+    return {message: 'Reset link sent', token }
+
+  }
+
+
+  async resetPassword(token: string, newPassword: string){
+    const payload = await this.jwtService.verifyAsync(token)
+    const user = await this.userRepository.findOne({
+      where: {id: payload.sub}
+    })
+
+    //validation 
+    if(!user) throw new NotFoundException('Invalid token');
+    //hash pass 
+    user.password = await bcrypt.hash(newPassword, 10);
+
+    await this.userRepository.save(user);
+    return { 
+      message: 'password reset successful'
+    }
+    
+  }
+
+
+
 }
+
+
+// create function to recover account when user forget it pass.    
+
+
+/* Add a “forgot password” flow:
+Create endpoint: POST /api/auth/forgot-password.
+Accept user email/username.
+Generate reset token (JWT or UUID).
+Email link: /api/auth/reset-password/:token.
+Add POST /api/auth/reset-password to set new password.
+Would you like me to show quick NestJS code for steps 1–2?  */
