@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CommentsController } from './comments.controller';
 import { CommentsService } from './comments.service';
+import { AuthGuard } from '../auth/AuthJwt.strategy';
 
 describe('CommentsController', () => {
   let controller: CommentsController;
@@ -19,7 +20,10 @@ describe('CommentsController', () => {
           useValue: mockCommentsService,
         },
       ],
-    }).compile();
+    })
+      .overrideGuard(AuthGuard)
+      .useValue({ canActivate: () => true }) // ALWAYS ALLOW
+      .compile();
 
     controller = module.get<CommentsController>(CommentsController);
     service = module.get<CommentsService>(CommentsService);
@@ -53,12 +57,16 @@ describe('CommentsController', () => {
       });
 
       expect(result).toEqual(mockResult);
-      expect(service.getCommentsByIncidentId).toHaveBeenCalledWith('incident1', {
-        offset: 0,
-        limit: 10,
-        sortBy: 'createdAt',
-        sortOrder: 'DESC',
-      });
+      expect(service.getCommentsByIncidentId).toHaveBeenCalledWith(
+        'incident1',
+        {
+          offset: 0,
+          limit: 10,
+          sortBy: 'createdAt',
+          sortOrder: 'DESC',
+        }
+      );
     });
   });
 });
+

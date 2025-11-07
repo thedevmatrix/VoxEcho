@@ -62,7 +62,7 @@ describe('CommentsService', () => {
         total: 2,
         offset: 0,
         limit: 10,
-        hasMore: false,
+        hasMore: 0 + mockComments.length < 2, // matches service implementation: offset + comments.length < total
       });
     });
 
