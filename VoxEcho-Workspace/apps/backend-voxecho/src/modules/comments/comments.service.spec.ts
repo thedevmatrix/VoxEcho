@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, IsNull } from 'typeorm';
 import { Comment } from '../entities /comment.entity';
 import { CommentsService } from './comments.service';
 import { NotFoundException } from '@nestjs/common';
@@ -9,26 +9,18 @@ describe('CommentsService', () => {
   let service: CommentsService;
   let repository: Repository<Comment>;
 
-  const mockComments = [
-    {
-      id: '1',
-      content: 'Test comment 1',
-      incidentId: 'incident1',
-      createdAt: new Date(),
-      author: { id: 1, username: 'user1' },
-      replies: [],
-    },
-    {
-      id: '2',
-      content: 'Test comment 2',
-      incidentId: 'incident1',
-      createdAt: new Date(),
-      author: { id: 2, username: 'user2' },
-      replies: [],
-    },
-  ];
-
-  beforeEach(async () => {
+      const mockComments = [
+        {
+          id: 1,
+          content: 'Test comment',
+          user: { id: 1, username: 'user1' },
+          children: [],
+          postId: 1,
+          parentId: null,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+      ];  beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         CommentsService,
@@ -47,11 +39,22 @@ describe('CommentsService', () => {
 
   describe('getCommentsByIncidentId', () => {
     it('should return comments with pagination metadata', async () => {
-      const result = await service.getCommentsByIncidentId('incident1', {
+      const result = await service.getCommentsByIncidentId('1', {
         offset: 0,
         limit: 10,
         sortBy: 'createdAt',
         sortOrder: 'DESC',
+      });
+
+      expect(repository.findAndCount).toHaveBeenCalledWith({
+        where: { 
+          postId: 1,
+          parentId: IsNull()
+        },
+        skip: 0,
+        take: 10,
+        order: { createdAt: 'DESC' },
+        relations: ['children', 'user'],
       });
 
       expect(result.data).toEqual(mockComments);

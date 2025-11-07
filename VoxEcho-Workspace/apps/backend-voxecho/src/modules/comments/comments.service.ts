@@ -11,13 +11,21 @@ export class CommentsService {
     private readonly commentRepository: Repository<Comment>
   ) {}
 
-  async getCommentsByIncidentId(incidentId: string, query: GetCommentsQueryDto) {
-    const { offset = 0, limit = 10, sortBy = 'createdAt', sortOrder = 'DESC' } = query;
+  async getCommentsByIncidentId(
+    incidentId: string,
+    query: GetCommentsQueryDto
+  ) {
+    const {
+      offset = 0,
+      limit = 10,
+      sortBy = 'createdAt',
+      sortOrder = 'DESC',
+    } = query;
 
     const [comments, total] = await this.commentRepository.findAndCount({
-      where: { 
+      where: {
         postId: Number(incidentId),
-        parentId: IsNull() // Get only top-level comments
+        parentId: IsNull(), // Get only top-level comments
       },
       skip: offset,
       take: limit,
@@ -26,7 +34,9 @@ export class CommentsService {
     });
 
     if (!comments.length && offset === 0) {
-      throw new NotFoundException(`No comments found for incident ${incidentId}`);
+      throw new NotFoundException(
+        `No comments found for incident ${incidentId}`
+      );
     }
 
     return {
