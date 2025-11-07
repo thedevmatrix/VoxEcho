@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, IsNull } from 'typeorm';
 import { Comment } from '../entities /comment.entity';
 import { GetCommentsQueryDto } from './dto/get-comments.dto';
 
@@ -15,11 +15,14 @@ export class CommentsService {
     const { offset = 0, limit = 10, sortBy = 'createdAt', sortOrder = 'DESC' } = query;
 
     const [comments, total] = await this.commentRepository.findAndCount({
-      where: { incident: { id: incidentId } },
+      where: { 
+        postId: Number(incidentId),
+        parentId: IsNull() // Get only top-level comments
+      },
       skip: offset,
       take: limit,
       order: { [sortBy]: sortOrder },
-      relations: ['replies', 'author'],
+      relations: ['children', 'user'],
     });
 
     if (!comments.length && offset === 0) {
