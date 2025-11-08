@@ -7,6 +7,11 @@ import { ConfigService } from "@nestjs/config";
 export class CustomConfigService {
     constructor(private configService: ConfigService) {}
 
+    get nodeEnv(): string {
+        const env = this.configService.get<string>('NODE_ENV');
+        return env || 'development';
+    }
+
     get databasePort(): number {
       const port = this.configService.get<number>('POSTGRES_PORT');
       if(!port){
