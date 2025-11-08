@@ -52,9 +52,10 @@ describe('CommentsService', () => {
           parentId: IsNull()
         },
         skip: 0,
-        take: 10,
+        take: Math.min(10, 100),
         order: { createdAt: 'DESC' },
         relations: ['children', 'user'],
+        cache: true
       });
 
       expect(result.data).toEqual(mockComments);
@@ -66,11 +67,22 @@ describe('CommentsService', () => {
       });
     });
 
+    it('should throw BadRequestException for invalid incident ID', async () => {
+      await expect(
+        service.getCommentsByIncidentId('nonexistent', {
+          offset: 0,
+          limit: 10,
+          sortBy: 'createdAt',
+          sortOrder: 'DESC',
+        })
+      ).rejects.toThrow('Invalid incident ID format');
+    });
+
     it('should throw NotFoundException when no comments found', async () => {
       jest.spyOn(repository, 'findAndCount').mockResolvedValueOnce([[], 0]);
 
       await expect(
-        service.getCommentsByIncidentId('nonexistent', {
+        service.getCommentsByIncidentId('1', {
           offset: 0,
           limit: 10,
           sortBy: 'createdAt',
