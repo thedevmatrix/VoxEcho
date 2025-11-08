@@ -3,6 +3,7 @@ import { IncidentsService } from './incidents.service';
 import { Repository } from 'typeorm';
 import { Post } from '../entities /incidentPost.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { LocationService } from './location/location.service';
 import { createIncidentDto } from '../dto/incidentDto/incidentPost.dto';
 describe('IncidentsService', () => {
   let service: IncidentsService;
@@ -15,12 +16,24 @@ describe('IncidentsService', () => {
   };
 
   beforeEach(async () => {
+    const mockLocationService = {
+      getPlaceFromCoords: jest.fn().mockResolvedValue({
+        placeName: 'Test Location',
+        placeId: '123',
+      }),
+      saveLocation: jest.fn().mockResolvedValue(true)
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         IncidentsService,
         {
           provide: getRepositoryToken(Post),
           useValue: mockPostRepository,
+        },
+        {
+          provide: LocationService,
+          useValue: mockLocationService,
         },
       ],
     }).compile();
