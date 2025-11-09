@@ -63,7 +63,7 @@ export class IncidentsService {
 
   // user can search  for post
   // we call for the location service here.
-  //--> brings filered post via location straight from db.
+  //--> brings filtered post via location straight from db.
   async findPostsByLocation(location: string): Promise<Post[]> {
     try {
       return await this.usersRepository.find({
