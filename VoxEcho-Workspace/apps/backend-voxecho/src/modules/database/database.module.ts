@@ -32,7 +32,7 @@ import { DataSource } from 'typeorm';
         // Connection timeout
         // connectTimeoutMS: 10000, // Removed: not supported for PostgreSQL
         keepConnectionAlive: true,
-        ssl: config.nodeEnv === 'production',
+        ssl: config.nodeEnv === 'production' ? { rejectUnauthorized: false } : false,
       }),
 
     inject: [CustomConfigService],
