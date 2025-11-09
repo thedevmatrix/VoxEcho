@@ -44,7 +44,7 @@ export class IncidentsService {
     });
 
     //created expression for validation
-    // saviing file in localstore with post
+    // saving file in localstore with post
     return await this.usersRepository.save(post);
   }
 
