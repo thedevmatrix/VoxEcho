@@ -62,7 +62,7 @@ export class IncidentsService {
   // this should be have a param for location... ?? should it be a string ?
 
   // user can search  for post
-  // we call for the loaction service here.
+  // we call for the location service here.
   //--> brings filered post via location straight from db.
   async findPostsByLocation(location: string): Promise<Post[]> {
     try {
