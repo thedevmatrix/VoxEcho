@@ -9,18 +9,20 @@ describe('CommentsService', () => {
   let service: CommentsService;
   let repository: Repository<Comment>;
 
-      const mockComments = [
-        {
-          id: 1,
-          content: 'Test comment',
-          user: { id: 1, username: 'user1' },
-          children: [],
-          postId: 1,
-          parentId: null,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
-      ];  beforeEach(async () => {
+  const mockComments = [
+    {
+      id: 1,
+      content: 'Test comment',
+      user: { id: 1, username: 'user1' },
+      children: [],
+      postId: 1,
+      parentId: null,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+  ];
+
+  beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         CommentsService,
