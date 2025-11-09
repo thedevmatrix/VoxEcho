@@ -24,12 +24,13 @@ import { DataSource } from 'typeorm';
         // Query execution timeout
         extra: {
           statement_timeout: 10000, // 10 seconds
+          connectionTimeoutMillis: 10000, // 10 seconds
         },
         // Retry connection settings
         retryAttempts: 3,
         retryDelay: 3000,
         // Connection timeout
-        connectTimeoutMS: 10000,
+        // connectTimeoutMS: 10000, // Removed: not supported for PostgreSQL
         keepConnectionAlive: true,
         ssl: config.nodeEnv === 'production',
       }),
