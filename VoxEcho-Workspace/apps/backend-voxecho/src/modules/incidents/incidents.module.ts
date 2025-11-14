@@ -4,7 +4,8 @@ import { IncidentsService } from './incidents.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Post } from '../entities /incidentPost.entity';
 import { IncidentVotesModule } from './incidentVotes/incident-votes.module';
-import { LocationService } from './location/location.service';import { LocationModule } from './location/location.module';
+import { LocationService } from './location/location.service';
+import { LocationModule } from './location/location.module';
 import { Comment } from '../entities /comment.entity';
 
 @Module({

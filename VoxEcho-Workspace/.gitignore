@@ -49,4 +49,5 @@ test-output
 
 # Ignore .env files
 .env
+.env.test
 

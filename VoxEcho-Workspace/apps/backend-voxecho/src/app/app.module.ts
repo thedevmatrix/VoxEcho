@@ -13,6 +13,7 @@ import { DatabaseModule } from '../modules/database/database.module';
 import { multerConfig } from '../middleware/Muterconfig.module';
 
 import { IncidentsModule } from '../modules/incidents/incidents.module';
+import { CommentsModule } from '../modules/comments/comments.module';
 import * as path from "path";
 @Global()
 @Module({
@@ -36,6 +37,7 @@ envFilePath: [path.resolve(process.cwd(), '.env')],
   UsersModule,
   IncidentsModule,
   multerConfig,
+  CommentsModule,
 
 ],
 
