@@ -14,15 +14,12 @@ import { DataSource } from 'typeorm';
         database: config.dataBase,
         autoLoadEntities: true,
         synchronize: config.nodeEnv !== 'production', // Only true in development
-        // Connection pool settings
-        pool: {
+        // Connection pool and query execution settings
+        extra: {
           min: 2,
           max: 10,
           idleTimeoutMillis: 30000,
-          acquireTimeoutMillis: 20000,
-        },
-        // Query execution timeout
-        extra: {
+          connectionTimeoutMillis: 20000,
           statement_timeout: 10000, // 10 seconds
           connectionTimeoutMillis: 10000, // 10 seconds
         },
