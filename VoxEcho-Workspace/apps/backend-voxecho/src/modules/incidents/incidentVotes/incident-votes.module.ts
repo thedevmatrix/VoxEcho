@@ -5,9 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Votes } from '../../entities /incident-votes.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Votes])
-  ],
+  imports: [TypeOrmModule.forFeature([Votes])],
   controllers: [IncidentVotesController],
   providers: [IncidentVotesService],
 })
