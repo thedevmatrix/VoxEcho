@@ -30,7 +30,7 @@ This app is built to **empower communities**, **disrupt misinformation**, and **
 - React · Tailwind CSS · shadcn/ui · TypeScript
 
 **Backend**  
-- NestJS · PostgreSQL · Prisma (or TypeORM) · WebSockets/Firebase
+- NestJS · PostgreSQL · WebSockets/Firebase
 
 **DevOps**  
 - GitHub Actions · Vercel/Railway · ESLint/Prettier · Jest  
