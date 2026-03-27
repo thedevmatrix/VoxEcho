@@ -76,7 +76,7 @@ We welcome all contributions! Please read [CONTRIBUTING.md](./CONTRIBUTING.md) b
 
 ## 📄 License
 
-This project is licensed under the MIT License — see [LICENSE](./LICENSE).
+This project is still under construction and licensed under the MIT License — see [LICENSE](./LICENSE).
 
 ---
 
